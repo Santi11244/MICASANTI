@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Cron?metro desde el 14/02/2025</title>
+<title>Cronómetro desde el 14/02/2025</title>
 <style>
 body {
 font-family: Arial, sans-serif;
@@ -30,7 +30,7 @@ border: 2px solid #00ffcc;
 </style>
 </head>
 <body>
-<h1>Tiempo desde el 14 de febrero de 2025</h1>
+<h1>Desde ese 14 de febrero de 2025 hasta hoy <3</h1>
 <div id="timer">Cargando...</div>
 
 <script>
@@ -46,7 +46,7 @@ const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
 document.getElementById('timer').textContent =
-`${days} d?as, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
+`${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
 }
 
 setInterval(updateTimer, 1000);
@@ -54,3 +54,4 @@ updateTimer(); // Initial call
 </script>
 </body>
 </html>
+

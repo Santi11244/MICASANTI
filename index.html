@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Cron?metro desde el 14/02/2025</title> 
+<title>Cronómetro desde el 14/02/2025</title> 
 
 <!-- Fuente Fugaz One desde Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
@@ -43,7 +43,7 @@ h1 {
 </style>
 </head>
 <body>
-<h1>Desde ese 14 de febrero de 2025 hasta hoy ??</h1> 
+<h1>Desde ese 14 de febrero de 2025 hasta hoy ❤️</h1> 
 <div id="timer">Cargando...</div>
 <div id="phrase"></div>
 
@@ -60,4 +60,34 @@ function updateTimer() {
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
   document.getElementById('timer').textContent =
-  `${days} d?as, ${hours} horas, ${minutes} minu
+  `${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos`; 
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+
+// Lista de frases
+const frases = [
+  "Te amo Cracy",
+  "Que pasa con vos :$",
+  "Que lindo haberte conocido",
+  "₍ᐢ. .ᐢ₎",
+  "The life talk me about you all time",
+  "Si estas leyendo esto seguramente estés al dope",
+  "TE QUIERO MICAAA",
+  "Amores así ya no existen OOAAAaa (i<3u)",
+  "Te amo para siempre 🥹",
+  "Mujer hermosa 😍",
+  "Grrr 😸"
+];
+
+// Mostrar frase aleatoria
+function mostrarFraseAleatoria() {
+  const indice = Math.floor(Math.random() * frases.length);
+  document.getElementById('phrase').textContent = frases[indice];
+}
+
+mostrarFraseAleatoria();
+</script>
+</body>
+</html>

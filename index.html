@@ -26,48 +26,4 @@ h1 {
   font-size: 2rem;
 }
 
-#timer {
-  font-size: 2rem;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  border: 4px solid red;
-  margin-bottom: 20px;
-
-  /* Animación de borde a rayas */
-  border-image: repeating-linear-gradient(
-    45deg,
-    red,
-    red 10px,
-    white 10px,
-    white 20px
-  ) 1;
-  animation: borderFlash 1s infinite;
-}
-
-@keyframes borderFlash {
-  0% { border-image-source: repeating-linear-gradient(45deg, red, red 10px, white 10px, white 20px); }
-  50% { border-image-source: repeating-linear-gradient(45deg, white, white 10px, red 10px, red 20px); }
-  100% { border-image-source: repeating-linear-gradient(45deg, red, red 10px, white 10px, white 20px); }
-}
-
-#phrase {
-  font-size: 1.5rem;
-  max-width: 80%;
-  white-space: pre-wrap;
-}
-</style>
-</head>
-<body>
-<h1>Desde ese 14 de febrero de 2025 hasta hoy ❤️</h1> 
-<div id="timer">Cargando...</div>
-<div id="phrase"></div>
-
-<script>
-const startDate = new Date('2025-02-14T00:00:00');
-
-function updateTimer() {
-  const now = new Date();
-  const diff = now - startDate;
-
-  const seconds = Math.floor(diff / 1000) % 60;
+#timer-contai

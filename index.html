@@ -31,8 +31,24 @@ h1 {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  border: 2px solid red;
+  border: 4px solid red;
   margin-bottom: 20px;
+
+  /* Animación de borde a rayas */
+  border-image: repeating-linear-gradient(
+    45deg,
+    red,
+    red 10px,
+    white 10px,
+    white 20px
+  ) 1;
+  animation: borderFlash 1s infinite;
+}
+
+@keyframes borderFlash {
+  0% { border-image-source: repeating-linear-gradient(45deg, red, red 10px, white 10px, white 20px); }
+  50% { border-image-source: repeating-linear-gradient(45deg, white, white 10px, red 10px, red 20px); }
+  100% { border-image-source: repeating-linear-gradient(45deg, red, red 10px, white 10px, white 20px); }
 }
 
 #phrase {
@@ -43,7 +59,7 @@ h1 {
 </style>
 </head>
 <body>
-<h1>Desde ese 14 de febrero de 2025 hasta hoy ⏳❤️</h1> 
+<h1>Desde ese 14 de febrero de 2025 hasta hoy ❤️</h1> 
 <div id="timer">Cargando...</div>
 <div id="phrase"></div>
 
@@ -55,46 +71,3 @@ function updateTimer() {
   const diff = now - startDate;
 
   const seconds = Math.floor(diff / 1000) % 60;
-  const minutes = Math.floor(diff / (1000 * 60)) % 60;
-  const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-  document.getElementById('timer').textContent =
-  `${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos`; 
-}
-
-setInterval(updateTimer, 1000);
-updateTimer();
-
-// Lista de frases
-const frases = [
-  "Te amo PutisCrazy",
-  "Que pasa con vos :$",
-  "Que lindo haberte conocido❤️‍🩹",
-  "₍ᐢ. .ᐢ₎",
-  "The life talk me about you all time°❀⋆.ೃ࿔*:･",
-  "Si estas leyendo esto seguramente estés al dope :D",
-  "TE QUIERO MICAAA,grr",
-  "Amores así ya no existen OOAAAaa (i<3u)",
-  "Te amo para siempre 🥹",
-  "Mujer hermosa 😍",
-  "Grrr 😸",
-  "Mi comunista fav. o_0",
-  
-];
-
-// Mostrar frase aleatoria
-function mostrarFraseAleatoria() {
-  const indice = Math.floor(Math.random() * frases.length);
-  document.getElementById('phrase').textContent = frases[indice];
-}
-
-mostrarFraseAleatoria();
-</script>
-</body>
-</html>
-
-
-
-
-

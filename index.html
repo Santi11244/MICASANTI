@@ -26,4 +26,109 @@ h1 {
   font-size: 2rem;
 }
 
-#timer-contai
+#timer-container {
+  display: inline-block;
+  padding: 5px;
+  background: repeating-linear-gradient(
+    45deg,
+    red,
+    red 10px,
+    white 10px,
+    white 20px
+  );
+  animation: stripesMove 1s linear infinite, flashColors 1s infinite;
+  border-radius: 12px;
+}
+
+#timer {
+  font-size: 2rem;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+@keyframes stripesMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+@keyframes flashColors {
+  0%, 100% {
+    background: repeating-linear-gradient(
+      45deg,
+      red,
+      red 10px,
+      white 10px,
+      white 20px
+    );
+  }
+  50% {
+    background: repeating-linear-gradient(
+      45deg,
+      white,
+      white 10px,
+      red 10px,
+      red 20px
+    );
+  }
+}
+
+#phrase {
+  font-size: 1.5rem;
+  max-width: 80%;
+  white-space: pre-wrap;
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<h1>Desde ese 14 de febrero de 2025 hasta hoy ❤️</h1> 
+<div id="timer-container">
+  <div id="timer">Cargando...</div>
+</div>
+<div id="phrase"></div>
+
+<script>
+const startDate = new Date('2025-02-14T00:00:00');
+
+function updateTimer() {
+  const now = new Date();
+  const diff = now - startDate;
+
+  const seconds = Math.floor(diff / 1000) % 60;
+  const minutes = Math.floor(diff / (1000 * 60)) % 60;
+  const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  document.getElementById('timer').textContent =
+  `${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos`; 
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+
+// Lista de frases
+const frases = [
+  "Te amo Cracy",
+  "Que pasa con vos :$",
+  "Que lindo haberte conocido",
+  "₍ᐢ. .ᐢ₎",
+  "The life talk me about you all time",
+  "Si estas leyendo esto seguramente estés al dope",
+  "TE QUIERO MICAAA",
+  "Amores así ya no existen OOAAAaa (i<3u)",
+  "Te amo para siempre 🥹",
+  "Mujer hermosa 😍",
+  "Grrr 😸"
+];
+
+// Mostrar frase aleatoria
+function mostrarFraseAleatoria() {
+  const indice = Math.floor(Math.random() * frases.length);
+  document.getElementById('phrase').textContent = frases[indice];
+}
+
+mostrarFraseAleatoria();
+</script>
+</body>
+</html>

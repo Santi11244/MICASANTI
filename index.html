@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Cronómetro desde el 14/02/2025</title>
 
-<!-- Fuente Fugaz One -->
 <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
 
 <style>
@@ -19,6 +18,8 @@ body {
   height: 100vh;
   flex-direction: column;
   text-align: center;
+  transition: background 1s ease, color 1s ease;
+  overflow: hidden;
 }
 
 h1 {
@@ -29,13 +30,7 @@ h1 {
 #timer-container {
   display: inline-block;
   padding: 5px;
-  background: repeating-linear-gradient(
-    45deg,
-    red,
-    red 10px,
-    white 10px,
-    white 20px
-  );
+  background: repeating-linear-gradient(45deg, red, red 10px, white 10px, white 20px);
   animation: stripesMove 1s linear infinite, flashColors 1s infinite;
   border-radius: 12px;
 }
@@ -54,19 +49,51 @@ h1 {
   margin-top: 20px;
 }
 
-/* 🌈 EFECTO ANIVERSARIO */
+/* 🌈 Arcoíris */
 .rainbow {
   animation: rainbowFlash 0.5s infinite;
 }
 
 @keyframes rainbowFlash {
-  0%   { color: red; }
-  16%  { color: orange; }
-  33%  { color: yellow; }
-  50%  { color: green; }
-  66%  { color: blue; }
-  83%  { color: purple; }
-  100% { color: red; }
+  0%{color:red;}16%{color:orange;}33%{color:yellow;}
+  50%{color:green;}66%{color:blue;}83%{color:purple;}100%{color:red;}
+}
+
+/* ⭐ Cielo nocturno aniversario */
+.night {
+  background: #0b3d91 !important;
+  color: white !important;
+}
+
+/* Capa de estrellas */
+#stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 1.5s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%,100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* Mantener contenido encima de estrellas */
+body > *:not(#stars) {
+  z-index: 1;
 }
 
 @keyframes stripesMove {
@@ -76,20 +103,18 @@ h1 {
 
 @keyframes flashColors {
   0%,100% {
-    background: repeating-linear-gradient(
-      45deg, red, red 10px, white 10px, white 20px
-    );
+    background: repeating-linear-gradient(45deg, red, red 10px, white 10px, white 20px);
   }
   50% {
-    background: repeating-linear-gradient(
-      45deg, white, white 10px, red 10px, red 20px
-    );
+    background: repeating-linear-gradient(45deg, white, white 10px, red 10px, red 20px);
   }
 }
 </style>
 </head>
 
 <body>
+
+<div id="stars"></div>
 
 <h1 id="title">Desde ese 14 de febrero de 2025 hasta hoy ❤️</h1>
 
@@ -105,6 +130,18 @@ const startDate = new Date('2025-02-14T00:00:00');
 const title = document.getElementById('title');
 const timer = document.getElementById('timer');
 const phrase = document.getElementById('phrase');
+const body = document.body;
+const starsContainer = document.getElementById('stars');
+
+// Crear estrellas
+for (let i = 0; i < 80; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.top = Math.random() * 100 + '%';
+  star.style.left = Math.random() * 100 + '%';
+  star.style.animationDelay = (Math.random() * 2) + 's';
+  starsContainer.appendChild(star);
+}
 
 function updateTimer() {
   const now = new Date();
@@ -118,24 +155,27 @@ function updateTimer() {
   timer.textContent =
     `${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
 
-  // 🎉 EFECTO SOLO CADA 365 DÍAS (1 día exacto)
+  // 🎉 Evento aniversario (1 día exacto cada 365)
   if (days > 0 && days % 365 === 0) {
     title.classList.add('rainbow');
     timer.classList.add('rainbow');
     phrase.classList.add('rainbow');
+    body.classList.add('night');
+    starsContainer.style.display = 'block';
   } else {
     title.classList.remove('rainbow');
     timer.classList.remove('rainbow');
     phrase.classList.remove('rainbow');
+    body.classList.remove('night');
+    starsContainer.style.display = 'none';
   }
 }
 
 setInterval(updateTimer, 1000);
 updateTimer();
 
-// Frases aleatorias
 const frases = [
-  "Te amo Crazy",
+  "Te amo Cracy",
   "Que pasa con vos :$",
   "Que lindo haberte conocido",
   "₍ᐢ. .ᐢ₎",
@@ -153,6 +193,3 @@ phrase.textContent = frases[Math.floor(Math.random() * frases.length)];
 
 </body>
 </html>
-
-
-

@@ -9,33 +9,27 @@
 
 <style>
 body{
-  font-family:'Fugaz One',sans-serif;
   margin:0;
-  height:100vh;
+  font-family:'Fugaz One',sans-serif;
   display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
+  height:100vh;
+  flex-direction:column;
   text-align:center;
-  transition:all 1s ease;
+  transition:background 1s,color 1s;
 }
 
-/* ===== ESTADO NORMAL ===== */
+/* ----------- ESTADO NORMAL ----------- */
 .normal{
   background:white;
   color:red;
 }
 
-#timer{
+.normal #timer{
   font-size:2.2rem;
   padding:20px;
   border-radius:12px;
-  margin-top:20px;
-  transition:all .5s ease;
-}
-
-/* Timer NORMAL a rayas */
-.normal #timer{
   border:4px solid red;
   background:repeating-linear-gradient(
     45deg,
@@ -45,24 +39,21 @@ body{
     red 20px
   );
   color:white;
-  text-shadow:2px 2px 4px black;
   animation:blinkBorder 1s infinite;
 }
 
 @keyframes blinkBorder{
-  0%{border-color:red;}
+  0%,100%{border-color:red;}
   50%{border-color:white;}
-  100%{border-color:red;}
 }
 
-/* ===== ESTADO ANIVERSARIO ===== */
+/* ----------- ANIVERSARIO ----------- */
 .anniversary{
   background:#0b3d91;
   color:white;
 }
 
-/* Texto arcoíris con borde negro */
-.anniversary .rainbow{
+.rainbow{
   animation:rainbowFlash .5s infinite;
   text-shadow:
     -2px -2px 0 #000,
@@ -81,27 +72,27 @@ body{
   100%{color:red;}
 }
 
-/* Timer limpio aniversario */
 .anniversary #timer{
-  background:white;
+  font-size:2.2rem;
+  padding:20px;
+  border-radius:12px;
   border:4px solid black;
+  background:white;
   color:black;
-  text-shadow:none;
-  animation:none;
 }
 
-/* ⭐ Estrellas */
+/* ----------- ESTRELLAS ----------- */
 #stars{
   position:fixed;
-  inset:0;
+  top:0;left:0;
+  width:100%;height:100%;
   pointer-events:none;
   display:none;
 }
 
 .star{
   position:absolute;
-  width:3px;
-  height:3px;
+  width:3px;height:3px;
   background:white;
   border-radius:50%;
   animation:twinkle 1.5s infinite ease-in-out;
@@ -111,6 +102,9 @@ body{
   0%,100%{opacity:.2;}
   50%{opacity:1;}
 }
+
+h1{margin-bottom:20px;}
+#phrase{margin-bottom:25px;font-size:1.4rem;}
 </style>
 </head>
 
@@ -123,7 +117,12 @@ body{
 <div id="timer">Cargando...</div>
 
 <script>
-const startDate = new Date('2025-02-14T00:00:00');
+const startDate=new Date('2025-02-14T00:00:00');
+const body=document.body;
+const title=document.getElementById('title');
+const phrase=document.getElementById('phrase');
+const timer=document.getElementById('timer');
+const stars=document.getElementById('stars');
 
 const phrases=[
 "Te amo Cracy",
@@ -139,17 +138,16 @@ const phrases=[
 "Grrr 😸"
 ];
 
-const body=document.body;
-const phrase=document.getElementById('phrase');
-const stars=document.getElementById('stars');
-const title=document.getElementById('title');
+// ⭐ frase aleatoria SOLO al entrar
+phrase.textContent=phrases[Math.floor(Math.random()*phrases.length)];
 
+// ⭐ estrellas
 for(let i=0;i<80;i++){
   const s=document.createElement('div');
   s.className='star';
   s.style.top=Math.random()*100+'%';
   s.style.left=Math.random()*100+'%';
-  s.style.animationDelay=Math.random()*2+'s';
+  s.style.animationDelay=(Math.random()*2)+'s';
   stars.appendChild(s);
 }
 
@@ -157,16 +155,15 @@ function updateTimer(){
   const now=new Date();
   const diff=now-startDate;
 
-  const s=Math.floor(diff/1000)%60;
-  const m=Math.floor(diff/60000)%60;
-  const h=Math.floor(diff/3600000)%24;
-  const d=Math.floor(diff/86400000);
+  const days=Math.floor(diff/(1000*60*60*24));
+  const hours=Math.floor(diff/(1000*60*60))%24;
+  const minutes=Math.floor(diff/(1000*60))%60;
+  const seconds=Math.floor(diff/1000)%60;
 
-  timer.textContent=`${d} días, ${h} horas, ${m} minutos, ${s} segundos`;
+  timer.textContent=`${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
 
-  const isAnniversary=d>0 && d%365===0;
-
-  if(isAnniversary){
+  // 🎉 cada 365 días
+  if(days>0 && days%365===0){
     body.className='anniversary';
     stars.style.display='block';
     title.classList.add('rainbow');
@@ -177,7 +174,6 @@ function updateTimer(){
     stars.style.display='none';
     title.classList.remove('rainbow');
     phrase.classList.remove('rainbow');
-    phrase.textContent=phrases[Math.floor(Math.random()*phrases.length)];
   }
 }
 

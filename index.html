@@ -3,32 +3,59 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Preview Día 365</title>
+<title>Desde el 14/02/2025 ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
 
 <style>
 body {
   font-family: 'Fugaz One', sans-serif;
-  background: #0b3d91;
-  color: white;
+  background: white;
+  color: red;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   flex-direction: column;
   text-align: center;
+  transition: background 1s ease, color 1s ease;
   overflow: hidden;
 }
 
-/* 🌈 Arcoíris SOLO texto */
+h1 { margin-bottom: 20px; }
+
+#phrase {
+  margin-bottom: 25px;
+  font-size: 1.4rem;
+}
+
+/* 🟥 Timer normal (rayas) AHORA LEGIBLE */
+#timer {
+  font-size: 2.2rem;
+  padding: 20px;
+  border-radius: 12px;
+  border: 4px solid red;
+  background: repeating-linear-gradient(
+    45deg,
+    white,
+    white 10px,
+    red 10px,
+    red 20px
+  );
+  animation: blinkBorder 1s infinite;
+  color: white;
+  text-shadow: 2px 2px 4px black;
+}
+
+@keyframes blinkBorder {
+  0% { border-color: red; }
+  50% { border-color: white; }
+  100% { border-color: red; }
+}
+
+/* 🌈 Arcoíris */
 .rainbow {
   animation: rainbowFlash 0.5s infinite;
-  text-shadow: 
-    -2px -2px 0 #000,
-     2px -2px 0 #000,
-    -2px  2px 0 #000,
-     2px  2px 0 #000;
 }
 
 @keyframes rainbowFlash {
@@ -41,20 +68,24 @@ body {
   100%{color:red;}
 }
 
+/* 🌌 Modo aniversario */
+.night {
+  background: #0b3d91 !important;
+  color: white !important;
+}
+
 /* ⭐ Estrellas */
 #stars {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   pointer-events: none;
+  display: none;
 }
 
 .star {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 3px; height: 3px;
   background: white;
   border-radius: 50%;
   animation: twinkle 1.5s infinite ease-in-out;
@@ -65,20 +96,22 @@ body {
   50% { opacity: 1; }
 }
 
-h1 { margin-bottom: 20px; }
-
-#phrase {
-  margin-bottom: 25px;
-  font-size: 1.4rem;
+/* ✨ Texto con borde negro SOLO aniversario */
+.anniversary-text {
+  text-shadow: 
+    -2px -2px 0 #000,
+     2px -2px 0 #000,
+    -2px  2px 0 #000,
+     2px  2px 0 #000;
 }
 
-#timer {
-  font-size: 2.2rem;
-  padding: 20px;
-  border-radius: 12px;
-  border: 4px solid black;
-  background: white;
-  color: black;
+/* 📦 Timer limpio SOLO aniversario */
+.anniversary-timer {
+  background: white !important;
+  border: 4px solid black !important;
+  animation: none !important;
+  color: black !important;
+  text-shadow: none !important;
 }
 </style>
 </head>
@@ -87,19 +120,34 @@ h1 { margin-bottom: 20px; }
 
 <div id="stars"></div>
 
-<h1 class="rainbow">Desde ese 14 de febrero de 2025 hasta hoy ❤️</h1>
-
-<div id="phrase" class="rainbow">
-A un año de conocernos y miles de historias mas juntos, te amo por siempre &lt;3
-</div>
-
-<div id="timer">
-365 días, 0 horas, 0 minutos, 0 segundos
-</div>
+<h1 id="title">Desde ese 14 de febrero de 2025 hasta hoy ❤️</h1>
+<div id="phrase"></div>
+<div id="timer">Cargando...</div>
 
 <script>
-// Generar estrellas
+const startDate = new Date('2025-02-14T00:00:00');
+
+const phrases = [
+"Te amo Crazy",
+"Que pasa con vos :$",
+"Que lindo haberte conocido",
+"₍ᐢ. .ᐢ₎",
+"The life talk me about you all time",
+"Si estas leyendo esto seguramente estés al dope",
+"TE QUIERO MICAAA",
+"Amores así ya no existen OOAAAaa (i<3u)",
+"Te amo para siempre 🥹",
+"Mujer hermosa 😍",
+"Grrr 😸"
+];
+
+const title = document.getElementById('title');
+const timer = document.getElementById('timer');
+const phraseElement = document.getElementById('phrase');
+const body = document.body;
 const starsContainer = document.getElementById('stars');
+
+/* ⭐ Crear estrellas */
 for (let i = 0; i < 80; i++) {
   const star = document.createElement('div');
   star.className = 'star';
@@ -108,12 +156,56 @@ for (let i = 0; i < 80; i++) {
   star.style.animationDelay = (Math.random() * 2) + 's';
   starsContainer.appendChild(star);
 }
+
+function setPhrase(days) {
+  if (days > 0 && days % 365 === 0) {
+    phraseElement.textContent =
+      "A un año de conocernos y miles de historias mas juntos, te amo por siempre <3";
+  } else {
+    const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+    phraseElement.textContent = randomPhrase;
+  }
+}
+
+function updateTimer() {
+  const now = new Date();
+  const diff = now - startDate;
+
+  const seconds = Math.floor(diff / 1000) % 60;
+  const minutes = Math.floor(diff / (1000 * 60)) % 60;
+  const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  timer.textContent =
+    `${days} días, ${hours} horas, ${minutes} minutos, ${seconds} segundos`;
+
+  setPhrase(days);
+
+  if (days > 0 && days % 365 === 0) {
+    title.classList.add('rainbow','anniversary-text');
+    timer.classList.add('anniversary-text','anniversary-timer');
+    phraseElement.classList.add('rainbow','anniversary-text');
+
+    body.classList.add('night');
+    starsContainer.style.display = 'block';
+  } else {
+    title.classList.remove('rainbow','anniversary-text');
+    timer.classList.remove('anniversary-text','anniversary-timer');
+    phraseElement.classList.remove('rainbow','anniversary-text');
+
+    body.classList.remove('night');
+    starsContainer.style.display = 'none';
+  }
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
 </script>
 
 </body>
 </html>
 
-</body>
 </html>
+
 
 

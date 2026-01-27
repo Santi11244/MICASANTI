@@ -22,9 +22,7 @@ body {
   overflow: hidden;
 }
 
-h1 {
-  margin-bottom: 20px;
-}
+h1 { margin-bottom: 20px; }
 
 #phrase {
   margin-bottom: 25px;
@@ -52,7 +50,7 @@ h1 {
   100% { border-color: red; }
 }
 
-/* 🌈 Texto arcoíris */
+/* 🌈 Arcoíris */
 .rainbow {
   animation: rainbowFlash 0.5s infinite;
 }
@@ -67,7 +65,7 @@ h1 {
   100%{color:red;}
 }
 
-/* 🌌 Modo aniversario (fondo nocturno) */
+/* 🌌 Modo aniversario */
 .night {
   background: #0b3d91 !important;
   color: white !important;
@@ -76,18 +74,15 @@ h1 {
 /* ⭐ Estrellas */
 #stars {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   pointer-events: none;
   display: none;
 }
 
 .star {
   position: absolute;
-  width: 3px;
-  height: 3px;
+  width: 3px; height: 3px;
   background: white;
   border-radius: 50%;
   animation: twinkle 1.5s infinite ease-in-out;
@@ -96,6 +91,23 @@ h1 {
 @keyframes twinkle {
   0%,100% { opacity: 0.2; }
   50% { opacity: 1; }
+}
+
+/* ✨ Texto con borde negro SOLO aniversario */
+.anniversary-text {
+  text-shadow: 
+    -2px -2px 0 #000,
+     2px -2px 0 #000,
+    -2px  2px 0 #000,
+     2px  2px 0 #000;
+}
+
+/* 📦 Timer limpio SOLO aniversario */
+.anniversary-timer {
+  background: white !important;
+  border: 4px solid black !important;
+  animation: none !important;
+  color: black !important;
 }
 </style>
 </head>
@@ -131,7 +143,7 @@ const phraseElement = document.getElementById('phrase');
 const body = document.body;
 const starsContainer = document.getElementById('stars');
 
-/* ⭐ Crear estrellas una sola vez */
+/* Crear estrellas */
 for (let i = 0; i < 80; i++) {
   const star = document.createElement('div');
   star.className = 'star';
@@ -144,7 +156,7 @@ for (let i = 0; i < 80; i++) {
 function setPhrase(days) {
   if (days > 0 && days % 365 === 0) {
     phraseElement.textContent =
-      "A un año de conocernos y miles de historias mas juntos, te amo por siempre <3";
+      "A un año de conocernos y a muchos de miles de historias más juntos, te amo por siempre <3";
   } else {
     const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
     phraseElement.textContent = randomPhrase;
@@ -166,15 +178,17 @@ function updateTimer() {
   setPhrase(days);
 
   if (days > 0 && days % 365 === 0) {
-    title.classList.add('rainbow');
-    timer.classList.add('rainbow');
-    phraseElement.classList.add('rainbow');
+    title.classList.add('rainbow','anniversary-text');
+    timer.classList.add('rainbow','anniversary-text','anniversary-timer');
+    phraseElement.classList.add('rainbow','anniversary-text');
+
     body.classList.add('night');
     starsContainer.style.display = 'block';
   } else {
-    title.classList.remove('rainbow');
-    timer.classList.remove('rainbow');
-    phraseElement.classList.remove('rainbow');
+    title.classList.remove('rainbow','anniversary-text');
+    timer.classList.remove('rainbow','anniversary-text','anniversary-timer');
+    phraseElement.classList.remove('rainbow','anniversary-text');
+
     body.classList.remove('night');
     starsContainer.style.display = 'none';
   }
